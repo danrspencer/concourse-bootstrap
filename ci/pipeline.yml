@@ -1,0 +1,17 @@
+jobs:
+- name: hello-world
+  plan:
+  - get: bootstrap
+    trigger: true
+  - task: hello-world
+    file: ci/tasks/hello.yml
+    params:
+      who: world
+
+resources:
+- name: bootstrap
+  type: git
+  source:
+    uri: {{git-repo}}
+    branches: master
+    private_key: {{private-repo-key}}

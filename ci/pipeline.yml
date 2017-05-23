@@ -4,7 +4,7 @@ jobs:
   - get: bootstrap
     trigger: true
   - task: hello-world
-    file: ci/tasks/hello.yml
+    file: hello-world/ci/tasks/hello.yml
     params:
       who: world
 

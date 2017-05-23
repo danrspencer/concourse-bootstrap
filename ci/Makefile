@@ -5,7 +5,7 @@ SSH_KEY_PATH=~/.ssh/id_rsa
 LIVE_URL=https://ci.concourse.ci
 # --------------------
 
-init: vagrant-up download-fly config login pipeline unpause-pipeline browse-dev
+init: vagrant-up download-fly config pipeline unpause-pipeline browse-dev
 
 # Dev
 login:

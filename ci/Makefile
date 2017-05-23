@@ -48,8 +48,8 @@ download-fly-linux: OS=linux
 download-fly-win: OS=windows
 
 config:
-	cp -n ./config-dev.yml.sample ./config-dev.yml || true
-	cp -n ./config-live.yml.sample ./config-live.yml || true
+	cp -n ./config.yml.sample ./config-dev.yml || true
+	cp -n ./config.yml.sample ./config-live.yml || true
 
 unpause-pipeline:
 	./fly --target ${TARGET} unpause-pipeline --pipeline ${PIPELINE_NAME}

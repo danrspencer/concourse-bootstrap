@@ -1,8 +1,8 @@
 # ------ Config ------
-PIPELINE_NAME=workflow-workshop
+PIPELINE_NAME=bootstrap
 
 SSH_KEY_PATH=~/.ssh/id_rsa
-LIVE_URL=http://ec2-concourse.anaplan-np.net:8080
+LIVE_URL=https://ci.concourse.ci
 # --------------------
 
 init: vagrant-up download-fly config login pipeline unpause-pipeline browse-dev

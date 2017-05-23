@@ -43,7 +43,7 @@ config:
 	cp -n ./config-live.yml.sample ./config-live.yml || true
 
 unpause-pipeline:
-	./fly --target ${TARGET} unpause-pipeline --pipeline ${PIPELINE}
+	./fly --target ${TARGET} unpause-pipeline --pipeline ${PIPELINE_NAME}
 
 browse-dev:
 	open http://192.168.100.4:8080/teams/main/login

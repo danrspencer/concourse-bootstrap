@@ -1,5 +1,13 @@
 # ------ Config ------
-PIPELINE_NAME=bootstrap
+#
+# By default lots of these are generated from
+# details of the git repo but they can be replaced
+# with specific values.
+#
+
+PIPELINE_NAME=`git remote -v | grep fetch | head -n 1 | sed 's/.*\/\(.*\)\..*/\1/'`
+GIT_REPO=`git remote -v | grep fetch | head -n 1 | awk '{print $$2}'`
+BRANCH=`git branch | grep \* | awk '{print $$2}'`
 
 SSH_KEY_PATH=~/.ssh/id_rsa
 LIVE_URL=https://ci.concourse.ci
@@ -16,7 +24,8 @@ pipeline: login
 									 --config pipeline.yml \
 									 --load-vars-from config-${TARGET}.yml \
 									 --var "private-repo-key=`cat ${SSH_KEY_PATH}`" \
-									 --var "git-repo=`git remote -v | grep fetch | head -n 1 | awk '{print $$2}'`"
+									 --var "git-repo=${GIT_REPO}" \
+									 --var "branch=${BRANCH}
 
 # Live
 live-login: TARGET=live

@@ -5,8 +5,6 @@ jobs:
     trigger: true
   - task: hello-world
     file: hello-world/ci/tasks/hello.yml
-    params:
-      who: world
 
 resources:
 - name: bootstrap

@@ -12,4 +12,4 @@ inputs:
 
 run:
   path: echo
-  args: [ "hello $who" ]
+  args: [ "hello world" ]

@@ -25,7 +25,7 @@ pipeline: login
 									 --load-vars-from config-${TARGET}.yml \
 									 --var "private-repo-key=`cat ${SSH_KEY_PATH}`" \
 									 --var "git-repo=${GIT_REPO}" \
-									 --var "branch=${BRANCH}
+									 --var "branch=${BRANCH}"
 
 # Live
 live-login: TARGET=live

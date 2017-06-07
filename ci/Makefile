@@ -1,28 +1,34 @@
 # ------ Config ------
-#
 # By default lots of these are generated from
 # details of the git repo but they can be replaced
 # with specific values.
-#
 
-PIPELINE_NAME=`git remote -v | grep fetch | head -n 1 | sed 's/.*\/\(.*\)\..*/\1/'`
-GIT_REPO=`git remote -v | grep fetch | head -n 1 | awk '{print $$2}'`
-BRANCH=`git branch | grep \* | awk '{print $$2}'`
+PIPELINE_NAME=	`git remote -v | grep fetch | head -n 1 | sed 's/.*\/\(.*\)\..*/\1/'`
+GIT_REPO=		`git remote -v | grep fetch | head -n 1 | awk '{print $$2}'`
+BRANCH=			`git branch | grep \* | awk '{print $$2}'`
 
-SSH_KEY_PATH=~/.ssh/id_rsa
-LIVE_URL=https://ci.concourse.ci
+SSH_KEY_PATH=	~/.ssh/id_rsa
+LIVE_URL=		https://ci.concourse.ci
+
+# ------ Defaults ------
+# You shouldn't need to change these
+
+TARGET=			dev
+URL=			http://192.168.100.4:8080
+
 # --------------------
 
-init: vagrant-up download-fly config pipeline unpause-pipeline browse-dev
+init: start-concourse pipeline unpause-pipeline browse-dev
 
 # Dev
 login:
-	./fly --target ${TARGET} login --concourse-url ${URL}
+	./util/retry ./fly --target ${TARGET} login --concourse-url ${URL}
 
 pipeline: login
 	./fly --target ${TARGET} set-pipeline --pipeline ${PIPELINE_NAME} \
 									 --config pipeline.yml \
 									 --load-vars-from config-${TARGET}.yml \
+									 --load-vars-from config-global.yml \
 									 --var "private-repo-key=`cat ${SSH_KEY_PATH}`" \
 									 --var "git-repo=${GIT_REPO}" \
 									 --var "branch=${BRANCH}"
@@ -36,28 +42,11 @@ live-pipeline: TARGET=live
 live-pipeline: live-login pipeline
 
 # Setup
-vagrant-up:
-	vagrant box update
-	vagrant up
-
-download-fly:
-	./scripts/retry curl --user concourse:concourse -o fly '${URL}/api/v1/cli?arch=amd64&platform=${OS}' -m 30
-	chmod +x fly
-
-download-fly-linux: OS=linux
-download-fly-win: OS=windows
-
-config:
-	cp -n ./config.yml.sample ./config-dev.yml || true
-	cp -n ./config.yml.sample ./config-live.yml || true
+start-concourse:
+	./util/setup-local-concourse
 
 unpause-pipeline:
 	./fly --target ${TARGET} unpause-pipeline --pipeline ${PIPELINE_NAME}
 
 browse-dev:
 	open http://192.168.100.4:8080/teams/main/login
-
-# Defaults
-TARGET=dev
-OS=darwin
-URL=http://192.168.100.4:8080

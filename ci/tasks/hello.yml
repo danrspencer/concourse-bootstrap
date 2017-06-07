@@ -11,5 +11,5 @@ inputs:
 - name: bootstrap
 
 run:
-  path: echo
-  args: [ "hello world" ]
+  path: bootstrap
+  args: ci/scripts/hello.sh

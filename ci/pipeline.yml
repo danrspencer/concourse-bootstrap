@@ -4,12 +4,12 @@ jobs:
   - get: bootstrap
     trigger: true
   - task: hello-world
-    file: hello-world/ci/tasks/hello.yml
+    file: bootstrap/ci/tasks/hello.yml
 
 resources:
 - name: bootstrap
   type: git
   source:
     uri: {{git-repo}}
-    branches: master
+    branch: {{branch}}
     private_key: {{private-repo-key}}

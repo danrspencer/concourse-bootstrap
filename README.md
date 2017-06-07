@@ -6,9 +6,4 @@ Quickly bootstrap your project with Concourse by running the `bootstrap.sh` in y
 curl -s https://raw.githubusercontent.com/danrspencer/concourse-bootstrap/master/bootstrap.sh | bash /dev/stdin
 ```
 
-The bootstrap script assumes you already have Vagrant installed. If you don't use the following commands to install it:
-
-```
-brew cask install virtualbox
-brew cask install vagrant
-```
+This should install everything you need to get up and running with Concourse, start the Vagrant box and setup a basic pipeline!
